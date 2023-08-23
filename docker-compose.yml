@@ -1,0 +1,21 @@
+version: "3"
+
+services:
+  react-app:
+    build: ./code
+    container_name: react-app
+    command: sh -c "cd my-app && npm start"
+    volumes:
+      - ./code/:/code
+    ports:
+      - '3000:3000'
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
+      - "19006:19006"
+  nginx:
+    build: ./nginx
+    ports:
+      - '8080:80'
+    volumes:
+      - ./code/my-app/build/:/usr/share/nginx/html/
