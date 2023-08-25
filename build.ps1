@@ -1,0 +1,1 @@
+docker-compose run react-app sh -c "cd my-app && npm run build && cp docs/index.html docs/404.html"

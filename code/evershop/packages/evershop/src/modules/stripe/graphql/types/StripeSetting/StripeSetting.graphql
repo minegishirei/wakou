@@ -1,7 +1,0 @@
-extend type Setting {
-  stripePaymentStatus: Int
-  stripeDislayName: String
-  stripePublishableKey: String
-  stripeSecretKey: String
-  stripeEndpointSecret: String
-}
