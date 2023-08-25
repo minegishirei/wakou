@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import WakouIndex from '../components/WakouIndex.vue'
 import WakouProducts from '../components/WakouProducts.vue'
 import WakouProductDetails from '../components/WakouProductDetails.vue'
+import WakouCart from '../components/WakouCart.vue'
+import WakouAcount from '../components/WakouAcount.vue'
 
 const routes = [
   {
@@ -23,6 +25,16 @@ const routes = [
     path: '/product_details.html',
     name: 'ProductDetails',
     component: WakouProductDetails
+  },
+  {
+    path: '/cart.html',
+    name: 'Cart',
+    component: WakouCart
+  },
+  {
+    path: '/acount.html',
+    name: 'Acount',
+    component: WakouAcount
   }
 ]
 

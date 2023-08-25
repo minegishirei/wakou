@@ -1,3 +1,4 @@
+<template>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -145,8 +146,7 @@
     </div>
 
     <!-- javascript -->
-
-    <script>
+    <component :is="'script'">
         var MenuItems = document.getElementById("MenuItems");
         MenuItems.style.maxHeight = "0px";
         function menutoggle() {
@@ -157,8 +157,25 @@
                 MenuItems.style.maxHeight = "0px"
             }
         }
-    </script>
+    </component>
 
 </body>
 
 </html>
+</template>
+
+<script>
+
+import store from "../store/store";
+export default {
+    name: 'WakouIndex',
+    data() {
+        document.title = "和光イベントカレンダー ~和光市で開催されるイベント一覧~"
+        return {
+            store_top3: Object.fromEntries(Object.entries(store).slice(0, 3)),
+            store_after3: Object.fromEntries(Object.entries(store).slice(3,)),
+            store: store
+        }
+    }
+}
+</script>

@@ -86,60 +86,21 @@
                 <p>View More</p>
             </div>
         </div>
-        <!-- Products -->
-        <div class="small-container">
-            <div class="row">
-                <div class="col-4">
-                    <img src="images/product-9.jpg">
-                    <h4>Red Printed T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
+
+        <div class="categories">
+            <div class="small-container">
+                <div class="row">
+                    <div class="col-4" v-for="(item, key) in store_top4" :key="key">
+                        <a v-bind:href="`product_details.html?id=${item.id}`">
+                            <img v-bind:src="`${item.image}`">
+                        </a>
+                        <h4>{{ item.title }}</h4>
+
+                        <p>{{ item.date }}</p>
                     </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/product-10.jpg">
-                    <h4>Red Printed T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/product-11.jpg">
-                    <h4>Red Printed T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
-                </div>
-                <div class="col-4">
-                    <img src="images/product-12.jpg">
-                    <h4>Red Printed T-Shirt</h4>
-                    <div class="rating">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star-o"></i>
-                    </div>
-                    <p>$50.00</p>
                 </div>
             </div>
         </div>
-
         <!-- Footer -->
         <div class="footer">
             <div class="container">
@@ -223,7 +184,11 @@ import store from "../store/store";
 export default {
     name: 'WakouProductDetails',
     data() {
-        return store[this.$route.query.id]
+        document.title = store[this.$route.query.id].title
+        return Object.assign(store[this.$route.query.id],{
+            store: store,
+            store_top4: Object.fromEntries(Object.entries(store).slice(0, 4)),
+        })
     }
 }
 </script>

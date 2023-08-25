@@ -235,6 +235,7 @@ import store from "../store/store";
 export default {
   name: 'WakouProducts',
     data() {
+        document.title = "和光市で開催予定のイベント一覧"
         return {
             store: store
         }

@@ -369,6 +369,7 @@ import store from "../store/store";
 export default {
     name: 'WakouIndex',
     data() {
+        document.title = "和光イベントカレンダー ~和光市で開催されるイベント一覧~"
         return {
             store_top3: Object.fromEntries(Object.entries(store).slice(0, 3)),
             store_after3: Object.fromEntries(Object.entries(store).slice(3,)),

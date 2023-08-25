@@ -14,6 +14,12 @@ services:
       - "19001:19001"
       - "19002:19002"
       - "19006:19006"
+  batch:
+    build: ./batch
+    container_name: batch
+    command: sh -c "cd /batch/code && python main.py"
+    volumes:
+      - ./batch/:/batch
   nginx:
     build: ./nginx
     ports:
