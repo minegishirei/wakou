@@ -20,6 +20,7 @@ def fetch_event_list(year=2023, month=8, day=21):
 
 def fetch_event_details(link):
     url = f"""https://www.city.wako.lg.jp{link}"""
+    print(url)
     time.sleep(1)
     r = requests.get(url)
     bsObj = BeautifulSoup(r.text, 'html.parser')
@@ -30,7 +31,38 @@ def fetch_event_details(link):
             event_details.update({
                 key_clear(td_list[0].getText()) : value_celar(td_list[1].getText())
             })
+    event_details.update({
+        "title" : value_celar(bsObj.find("title").getText()),
+    })
+    """
+    event_details.update({
+        "description" : value_celar(bsObj.find("description").getText())
+    })
+    """
     return event_details
+
+
+def fetch_more_event_details(link):
+    print(link)
+    event_more_details = {}
+    url = link
+    r = requests.get(url)
+    content_type_encoding = r.encoding if r.encoding != 'ISO-8859-1' else None
+    bsObj = BeautifulSoup(r.content, 'html.parser', from_encoding=content_type_encoding)
+    div_photo = bsObj.find("div", attrs={"id": "photo"})
+    print(bsObj)
+    link_list = []
+    for img in div_photo.find_all("img"):
+        src= img.get('src')
+        if src[0] == ".":
+            link_list.append( ("https://www.sunazalea.or.jp/event" + src[1:]).replace(" ", ""))
+        else:
+            link_list.append(src)
+    event_more_details.update({
+        "images" : link_list,
+        "description" : bsObj.find("h3").getText()
+    })
+    return event_more_details
 
 
 

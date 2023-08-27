@@ -1,0 +1,1 @@
+docker-compose run react-app sh -c "cd my-app && npm install"

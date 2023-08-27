@@ -58,7 +58,7 @@
                 <div class="row">
                     <div class="col-3" v-for="(item, key) in store_top3" :key="key">
                         <a v-bind:href="`product_details.html?id=${item.id}`">
-                            <img v-bind:src="`${item.image}`">
+                            <img v-bind:src="`${item.images[1]? item.images[1] : item.images[0]}`">
                         </a>
                         <h4>{{ item.title }}</h4>
 
@@ -75,7 +75,7 @@
             <h2 class="title">近日開催予定イベント!</h2>
             <div class="row">
                 <div class="col-4" v-for="(item, key) in store_after3" :key="key">
-                    <a v-bind:href="`product_details.html?id=${item.id}`"><img v-bind:src="`${item.image}`"></a>
+                    <a v-bind:href="`product_details.html?id=${item.id}`"><img v-bind:src="`${item.images[1]? item.images[1] : item.images[0]}`"></a>
                     <h4>{{ item.title }}</h4>
                     <div class="rating">
                         <i class="fa fa-star"></i>

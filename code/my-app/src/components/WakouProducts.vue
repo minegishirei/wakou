@@ -47,7 +47,7 @@
         </div>
         <div class="row" >
             <div class="col-4" v-for="(item, key) in store" :key="key">
-                <a v-bind:href="`product_details.html?id=${ item.id }`"><img :src="item.image"></a>
+                <a v-bind:href="`product_details.html?id=${ item.id }`"><img v-bind:src="`${item.images[1]? item.images[1] : item.images[0]}`"></a>
                 <h4>Red Printed T-Shirt</h4>
                 <div class="rating">
                     <i class="fa fa-star"></i>

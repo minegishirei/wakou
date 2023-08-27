@@ -17,7 +17,7 @@ services:
   batch:
     build: ./batch
     container_name: batch
-    command: sh -c "cd /batch/code && python main.py"
+    command: sh #-c "cd /batch/code && python main.py"
     volumes:
       - ./batch/:/batch
   nginx:

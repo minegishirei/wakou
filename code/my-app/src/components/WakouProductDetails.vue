@@ -38,32 +38,29 @@
         <div class="small-container single-product">
             <div class="row">
                 <div class="col-3">
-                    <img :src="image" width="100%" id="ProductImg">
-
-                    <!--
-                <div class="small-img-row">
-                    <div class="small-img-col">
-                        <img src="images/gallery-1.jpg" width="100%" class="small-img">
+                    <div v-for="image in images" :key="image">
+                        <img :src="image" width="100%" id="ProductImg" >
                     </div>
-                    <div class="small-img-col">
-                        <img src="images/gallery-2.jpg" width="100%" class="small-img">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="images/gallery-3.jpg" width="100%" class="small-img">
-                    </div>
-                    <div class="small-img-col">
-                        <img src="images/gallery-4.jpg" width="100%" class="small-img">
-                    </div>
-                </div>
-            -->
                 </div>
                 <div class="col-2">
                     <p>Home / T-Shirt</p>
                     <h1>{{ title }}</h1>
-                    <h4>{{ date }}</h4>
+                    <h4>{{ date }} {{ open_at }}</h4>
 
                     <h3>イベント詳細 <i class="fa fa-indent"></i></h3>
                     <p>{{ description }}</p>
+<br>
+                    <h3>開催 <i class="fa fa-indent"></i></h3>
+                    <p>{{ ask }}</p>
+
+<br>
+                    <h3>料金 <i class="fa fa-indent"></i></h3>
+                    <p>{{ fee }}</p>
+
+<br>
+                    <h3>場所 <i class="fa fa-indent"></i></h3>
+                    <p>{{ location }}</p>
+                    <!--
                     <select>
                         <option>Select Size</option>
                         <option>XXL</option>
@@ -74,6 +71,24 @@
                     </select>
                     <input type="number" value="1">
                     <a href="" class="btn">Add To Cart</a>
+                    -->
+
+                    <!--
+
+                            "20230517153633": {
+        "date": " 令和5年8月22日（火曜日）",
+        "open_at": " 14：00 ",
+        "location": " 小ホール",
+        "fee": " 全席自由 2,800円（税込） 【サンアゼリア友の会会員 2,500円（税込）】 ※未就学のお子様のご入場はご遠慮ください。",
+        "detail_link": "https://www.sunazalea.or.jp/event/detail.cgi?key=20230517153633",
+        "ask": " サンアゼリア 048-468-7771 ",
+        "title": "和光市/和光市民文化センターサンアゼリア開館30周年記念 サンアゼリア寄席 柳亭明楽真打昇進披露公演",
+        "images": [
+            "https://www.sunazalea.or.jp/event/log/img/20230517153633_1.jpg"
+        ],
+        "id": "20230517153633"
+    },
+                    -->
 
                     <br>
                 </div>
@@ -92,7 +107,7 @@
                 <div class="row">
                     <div class="col-4" v-for="(item, key) in store_top4" :key="key">
                         <a v-bind:href="`product_details.html?id=${item.id}`">
-                            <img v-bind:src="`${item.image}`">
+                            <img v-bind:src="`${item.images[1]? item.images[1] : item.images[0]}`">
                         </a>
                         <h4>{{ item.title }}</h4>
 
@@ -185,9 +200,12 @@ export default {
     name: 'WakouProductDetails',
     data() {
         document.title = store[this.$route.query.id].title
-        return Object.assign(store[this.$route.query.id],{
-            store: store,
-            store_top4: Object.fromEntries(Object.entries(store).slice(0, 4)),
+        return Object.assign(
+            store[this.$route.query.id],
+            store[this.$route.query.id],
+            {
+                store: store,
+                store_top4: Object.fromEntries(Object.entries(store).slice(0, 4)),
         })
     }
 }
