@@ -60,6 +60,11 @@
 <br>
                     <h3>場所 <i class="fa fa-indent"></i></h3>
                     <p>{{ location }}</p>
+<br>
+                    <h3>参照元 <i class="fa fa-indent"></i></h3>
+                    <p>{{ detail_link }}</p>
+
+
                     <!--
                     <select>
                         <option>Select Size</option>
