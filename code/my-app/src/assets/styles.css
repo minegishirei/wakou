@@ -476,6 +476,8 @@ form a{
     }
 }
 
+.longurl{word-break: break-all;}
+
 /* Media query for 600 screen size */
 @media only screen and (max-width: 600px){
 

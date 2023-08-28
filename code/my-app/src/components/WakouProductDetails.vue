@@ -1,4 +1,3 @@
-
 <template>
     <!DOCTYPE html>
     <html lang="en">
@@ -14,55 +13,37 @@
     </head>
 
     <body>
-        <div class="container">
-            <div class="navbar">
-                <div class="logo">
-                    <a href="index.html"><img src="images/logo.png" alt="logo" width="125px"><b>和光イベントカレンダー</b></a>
-
-                </div>
-                <nav>
-                    <ul id="MenuItems">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="products.html">Products</a></li>
-                        <li><a href="">About</a></li>
-                        <li><a href="">Contact</a></li>
-                        <li><a href="account.html">Account</a></li>
-                    </ul>
-                </nav>
-                <a href="cart.html"><img src="images/cart.png" width="30px" height="30px"></a>
-                <img src="images/menu.png" class="menu-icon" onclick="menutoggle()">
-            </div>
-        </div>
+        <MyHeader></MyHeader>
 
         <!-- Single Products -->
         <div class="small-container single-product">
             <div class="row">
                 <div class="col-3">
                     <div v-for="image in images" :key="image">
-                        <img :src="image" width="100%" id="ProductImg" >
+                        <img :src="image" width="100%" id="ProductImg">
                     </div>
                 </div>
                 <div class="col-2">
-                    <p>Home / T-Shirt</p>
+                    <p>イベント内容</p>
                     <h1>{{ title }}</h1>
                     <h4>{{ date }} {{ open_at }}</h4>
 
                     <h3>イベント詳細 <i class="fa fa-indent"></i></h3>
                     <p>{{ description }}</p>
-<br>
+                    <br>
                     <h3>開催 <i class="fa fa-indent"></i></h3>
                     <p>{{ ask }}</p>
 
-<br>
+                    <br>
                     <h3>料金 <i class="fa fa-indent"></i></h3>
                     <p>{{ fee }}</p>
 
-<br>
+                    <br>
                     <h3>場所 <i class="fa fa-indent"></i></h3>
                     <p>{{ location }}</p>
-<br>
+                    <br>
                     <h3>参照元 <i class="fa fa-indent"></i></h3>
-                    <p>{{ detail_link }}</p>
+                    <p class="longurl">{{ detail_link }}</p>
 
 
                     <!--
@@ -112,7 +93,7 @@
                 <div class="row">
                     <div class="col-4" v-for="(item, key) in store_top4" :key="key">
                         <a v-bind:href="`product_details.html?id=${item.id}`">
-                            <img v-bind:src="`${item.images[1]? item.images[1] : item.images[0]}`">
+                            <img v-bind:src="`${item.images[1] ? item.images[1] : item.images[0]}`">
                         </a>
                         <h4>{{ item.title }}</h4>
 
@@ -201,6 +182,8 @@
 
 <script>
 import store from "../store/store";
+import MyHeader from "./molcutes/MyHeader";
+
 export default {
     name: 'WakouProductDetails',
     data() {
@@ -211,7 +194,10 @@ export default {
             {
                 store: store,
                 store_top4: Object.fromEntries(Object.entries(store).slice(0, 4)),
-        })
+            })
+    },
+    components: {
+        'MyHeader' : MyHeader
     }
 }
 </script>
