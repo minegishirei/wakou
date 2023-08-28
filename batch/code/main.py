@@ -31,7 +31,7 @@ def rotate_fetch_eventlist(next_week_amount):
 
 searched_link_set = set()
 all_events = {}
-for event in rotate_fetch_eventlist(10):
+for event in rotate_fetch_eventlist(50):
     try:
         if event["link"] and (event["link"] not in searched_link_set):
             searched_link_set.add(event["link"])
