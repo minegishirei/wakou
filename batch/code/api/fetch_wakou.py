@@ -15,8 +15,6 @@ def fetch_event_list(year=2023, month=8, day=21):
             "title": td_list[1].find("a").text if td_list[1].find("a") else None,
         }
 
-#https://www.city.wako.lg.jp/home/kyoiku/rekisi/gyo_bunka_1_2/_16836/sunazalea_event/_22301.html
-
 
 def fetch_event_details(link):
     url = f"""https://www.city.wako.lg.jp{link}"""
@@ -34,11 +32,6 @@ def fetch_event_details(link):
     event_details.update({
         "title" : value_celar(bsObj.find("title").getText()),
     })
-    """
-    event_details.update({
-        "description" : value_celar(bsObj.find("description").getText())
-    })
-    """
     return event_details
 
 
@@ -53,7 +46,7 @@ def fetch_more_event_details(link):
     print(bsObj)
     link_list = []
     for img in div_photo.find_all("img"):
-        src= img.get('src')
+        src = img.get('src')
         if src[0] == ".":
             link_list.append( ("https://www.sunazalea.or.jp/event" + src[1:]).replace(" ", ""))
         else:
