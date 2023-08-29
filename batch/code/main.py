@@ -36,15 +36,14 @@ def rotate_fetch_eventlist(next_week_amount):
 
 
 
-
-def wakou_sanzarie():
+def wakou_sanzarie(amount):
     searched_link_set = set()
     all_events = {}
-    for event in rotate_fetch_eventlist(50):
+    for event in rotate_fetch_eventlist(amount):
         try:
             if event["link"] and (event["link"] not in searched_link_set):
+                print(event["link"])
                 searched_link_set.add(event["link"])
-                print(searched_link_set)
                 event_details = fetch_event_details(event["link"])
                 if "detail_link" in event_details:
                     event_details.update(fetch_more_event_details(event_details["detail_link"]))
@@ -56,28 +55,28 @@ def wakou_sanzarie():
                 })
         except Exception as e:
             print(e)
-    sitemap = create_sitemap(all_events)
-    with open('./output/store.json', 'w') as f:
-        json.dump(all_events, f, indent=4, ensure_ascii=False)
-    with open('./output/sitemap.xml', 'w') as f:
-        f.write(sitemap)
+    return all_events
     
     
 
-"""
-event_list = fetch_lib_event_list()
-
-for event in event_list[:2]:
-    print(event["detail_link"])
-    pprint(fetch_lib_event_details(event["detail_link"]))
-"""  
-
-wakou_sanzarie()
-
-
-
+def wakou_lib(amount):
+    event_list = fetch_lib_event_list()
+    all_events = {}
+    for event in event_list[:amount]:
+        print(event["detail_link"])
+        event.update(fetch_lib_event_details(event["detail_link"]))
+        all_events.update({
+            event["id"] : event
+        })
+    return all_events
 
 
+ALL_EVENTS = wakou_sanzarie(50)
+ALL_EVENTS.update(wakou_lib(6))
+
+
+with open('./output/store.json', 'w') as f:
+    json.dump(ALL_EVENTS, f, indent=4, ensure_ascii=False)
 
 
 

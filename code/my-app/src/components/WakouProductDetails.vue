@@ -22,6 +22,9 @@
                     <div v-for="image in images" :key="image">
                         <img :src="image" width="100%" id="ProductImg">
                     </div>
+                    <div v-if="pdfs">
+                        <iframe :src="`${pdfs[0]}#toolbar=0&navpanes=0`" style="{width:100%;height:42vh;}"></iframe>
+                    </div>
                 </div>
                 <div class="col-2">
                     <p>イベント内容</p>
