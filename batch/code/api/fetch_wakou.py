@@ -7,13 +7,15 @@ def fetch_event_list(year=2023, month=8, day=21):
     time.sleep(1)
     r = requests.get(url)
     bsObj = BeautifulSoup(r.text, 'html.parser')
+    result_list = []
     for weekCalendarTr in bsObj.find_all("tr", attrs={ 'class': "weekCalendarTr" }):
         td_list = weekCalendarTr.find_all("td")
-        yield {
+        result_list.append({
             "date" : td_list[0].text,
             "link" : td_list[1].find("a").get("href") if td_list[1].find("a") else None,
             "title": td_list[1].find("a").text if td_list[1].find("a") else None,
-        }
+        })
+    return result_list
 
 
 def fetch_event_details(link):
@@ -43,7 +45,6 @@ def fetch_more_event_details(link):
     content_type_encoding = r.encoding if r.encoding != 'ISO-8859-1' else None
     bsObj = BeautifulSoup(r.content, 'html.parser', from_encoding=content_type_encoding)
     div_photo = bsObj.find("div", attrs={"id": "photo"})
-    print(bsObj)
     link_list = []
     for img in div_photo.find_all("img"):
         src = img.get('src')

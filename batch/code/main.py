@@ -2,6 +2,7 @@ from pprint import pprint
 from api.fetch_wakou import fetch_event_list, fetch_event_details, fetch_more_event_details
 from api.fetch_wakou_lib import fetch_lib_event_list
 from api.fetch_wakou_lib import fetch_event_details as fetch_lib_event_details
+from createfile.sitemap import create_sitemap
 from mydate.date import get_next_target_date
 import datetime
 import json
@@ -23,7 +24,7 @@ def rotate_fetch_eventlist(next_week_amount):
     eventlist = []
     # 現在の日付を取得する。
     today = datetime.date.today()
-    next_date = get_next_target_date(today, '月') + datetime.timedelta(days=-7)
+    next_date = get_next_target_date(today, '月') + datetime.timedelta(days=-14)
     for _ in range(0, next_week_amount):
         eventlist.extend(list(fetch_event_list(
             year=next_date.strftime('%Y'),
@@ -55,17 +56,29 @@ def wakou_sanzarie():
                 })
         except Exception as e:
             print(e)
-
-    with open('store.json', 'w') as f:
+    sitemap = create_sitemap(all_events)
+    with open('./output/store.json', 'w') as f:
         json.dump(all_events, f, indent=4, ensure_ascii=False)
+    with open('./output/sitemap.xml', 'w') as f:
+        f.write(sitemap)
+    
+    
 
-
+"""
 event_list = fetch_lib_event_list()
 
 for event in event_list[:2]:
     print(event["detail_link"])
     pprint(fetch_lib_event_details(event["detail_link"]))
-    
+"""  
+
+wakou_sanzarie()
+
+
+
+
+
+
 
 
 
