@@ -7,6 +7,7 @@
             <nav>
                 <ul id="MenuItems">
                     <li><a href="index.html">ホーム</a></li>
+                    <li><a href="product_calender.html">イベントカレンダー</a></li>
                     <li><a href="products.html">イベント一覧</a></li>
                 </ul>
             </nav>

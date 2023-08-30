@@ -1,8 +1,11 @@
+
+
 <template>
     <!DOCTYPE html>
     <html lang="en">
 
     <head>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>All Products | RedStore</title>
@@ -17,72 +20,8 @@
 
         <!-- Single Products -->
         <div class="small-container single-product">
-            <div class="row">
-                <div class="col-3">
-                    <div v-for="image in images" :key="image">
-                        <img :src="image" width="100%" id="ProductImg">
-                    </div>
-                    <div v-if="pdfs">
-                        <iframe :src="`${pdfs[0]}#toolbar=0&navpanes=0`" style="{width:100%;height:42vh;}"></iframe>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <p>イベント内容</p>
-                    <h1>{{ title }}</h1>
-                    <h4>{{ date }} {{ open_at }}</h4>
+            <FullCalendar :options="calendarOptions" />
 
-                    <h3>イベント詳細 <i class="fa fa-indent"></i></h3>
-                    <p>{{ description }}</p>
-                    <br>
-                    <h3>開催 <i class="fa fa-indent"></i></h3>
-                    <p>{{ ask }}</p>
-
-                    <br>
-                    <h3>料金 <i class="fa fa-indent"></i></h3>
-                    <p>{{ fee }}</p>
-
-                    <br>
-                    <h3>場所 <i class="fa fa-indent"></i></h3>
-                    <p>{{ location }}</p>
-                    <br>
-                    <h3>参照元 <i class="fa fa-indent"></i></h3>
-                    <p class="longurl">{{ detail_link }}</p>
-
-                    <a v-if="purchase" v-bind:href="`${purchase}`" class="btn">チケット購入（公式ページへ）</a>
-
-                    <!--
-                    <select>
-                        <option>Select Size</option>
-                        <option>XXL</option>
-                        <option>XL</option>
-                        <option>L</option>
-                        <option>M</option>
-                        <option>S</option>
-                    </select>
-                    <input type="number" value="1">
-                    <a href="" class="btn">Add To Cart</a>
-                    -->
-
-                    <!--
-
-                            "20230517153633": {
-        "date": " 令和5年8月22日（火曜日）",
-        "open_at": " 14：00 ",
-        "location": " 小ホール",
-        "fee": " 全席自由 2,800円（税込） 【サンアゼリア友の会会員 2,500円（税込）】 ※未就学のお子様のご入場はご遠慮ください。",
-        "detail_link": "https://www.sunazalea.or.jp/event/detail.cgi?key=20230517153633",
-        "ask": " サンアゼリア 048-468-7771 ",
-        "title": "和光市/和光市民文化センターサンアゼリア開館30周年記念 サンアゼリア寄席 柳亭明楽真打昇進披露公演",
-        "images": [
-            "https://www.sunazalea.or.jp/event/log/img/20230517153633_1.jpg"
-        ],
-        "id": "20230517153633"
-    },
-                    -->
-
-                    <br>
-                </div>
-            </div>
         </div>
         <!-- title -->
         <div class="small-container">
@@ -188,20 +127,52 @@
 import store from "../store/store";
 import MyHeader from "./molcutes/MyHeader";
 
+import FullCalendar from '@fullcalendar/vue3'
+import dayGridPlugin from '@fullcalendar/daygrid'
+//import interactionPlugin from '@fullcalendar/interaction'
+import FullCalendarInteraction from '@fullcalendar/interaction';
+
 export default {
     name: 'WakouProductDetails',
     data() {
-        document.title = store[this.$route.query.id].title
+        document.title = "和光市のイベントをカレンダーから探す!"
         return Object.assign(
-            store[this.$route.query.id],
-            store[this.$route.query.id],
             {
                 store: store,
                 store_top4: Object.fromEntries(Object.entries(store).slice(0, 4)),
+                calendarOptions: {
+                    plugins: [dayGridPlugin, FullCalendarInteraction],
+                    headerToolbar: {
+                        left: '',
+                        center: 'title',
+                        right: 'prev,next'
+                    },
+                    locale: 'ja',
+                    initialView: 'dayGridMonth',
+                    dateClick: this.handleDateClick,
+                    eventClick: this.handleEventClick,
+                    events: Object.values(store).map(row => Object.assign({
+                        title: row.title,
+                        date: row.split_date[0] + "-" + String(row.split_date[1]).padStart(2, '0') + "-" + row.split_date[2],
+                        id : row.id
+                    }))
+
+                }
             })
     },
     components: {
-        'MyHeader' : MyHeader
+        'MyHeader': MyHeader,
+        'FullCalendar': FullCalendar // make the <FullCalendar> tag available
+    },
+    methods: {
+        handleDateClick: function () {
+        },
+        handleEventClick: function (arg) {
+            console.log(arg)
+            console.log(arg.event._def.publicId)
+            window.location.href = `./product_details.html?id=${ arg.event._def.publicId}`
+        }
     }
 }
+
 </script>

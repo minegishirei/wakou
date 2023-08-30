@@ -45,6 +45,7 @@ def wakou_sanzarie(amount):
                 print(event["link"])
                 searched_link_set.add(event["link"])
                 event_details = fetch_event_details(event["link"])
+                event_details.update(event)
                 if "detail_link" in event_details:
                     event_details.update(fetch_more_event_details(event_details["detail_link"]))
                 event_details.update({
@@ -70,9 +71,9 @@ def wakou_lib(amount):
         })
     return all_events
 
-
+ALL_EVENTS = {}
 ALL_EVENTS = wakou_sanzarie(50)
-ALL_EVENTS.update(wakou_lib(6))
+ALL_EVENTS.update(wakou_lib(10))
 
 
 with open('./output/store.json', 'w') as f:

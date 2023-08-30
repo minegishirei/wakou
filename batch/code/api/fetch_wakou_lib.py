@@ -2,6 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import uuid
+import re
 
 def myuuid(target):
     return uuid.uuid3(uuid.uuid1(), target)
@@ -18,6 +19,7 @@ def fetch_lib_event_list():
     for li in  eventBsObj.find_all("li"):
         event = {
             "date" : li.find("span", { "class":"update_date"}).getText(),
+            "split_date" : re.split('[年月日]', li.find("span", { "class":"update_date"}).getText())[:3],
             "title" : "和光図書館" + li.find("span", { "class":"news_description"}).getText(),
             "detail_link" : url + li.find("span", { "class":"news_description"}).find("a").get("href"),
         }
@@ -48,6 +50,5 @@ def fetch_event_details(url):
         event_details.update({
             "pdfs" : list(set(list(filter(lambda href: href.endswith(".pdf"), [ base_url + img.get("href") for img in main_containt.find_all("a")]))))
         })
-    
     return event_details
 

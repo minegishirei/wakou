@@ -4,6 +4,7 @@ import WakouProducts from '../components/WakouProducts.vue'
 import WakouProductDetails from '../components/WakouProductDetails.vue'
 import WakouCart from '../components/WakouCart.vue'
 import WakouAcount from '../components/WakouAcount.vue'
+import WakouEventCalender from '../components/WakouEventCalender.vue'
 
 const routes = [
   {
@@ -25,6 +26,11 @@ const routes = [
     path: '/product_details.html',
     name: 'ProductDetails',
     component: WakouProductDetails
+  },
+  {
+    path: '/product_calender.html',
+    name: 'WakouEventCalender',
+    component: WakouEventCalender
   },
   {
     path: '/cart.html',

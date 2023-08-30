@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+import re
 
 def fetch_event_list(year=2023, month=8, day=21):
     url = f"""https://www.city.wako.lg.jp/home/kensaku/event.html?wyear13259={year}&wmonth13259={month}&wday13259={day}"""
@@ -11,7 +12,8 @@ def fetch_event_list(year=2023, month=8, day=21):
     for weekCalendarTr in bsObj.find_all("tr", attrs={ 'class': "weekCalendarTr" }):
         td_list = weekCalendarTr.find_all("td")
         result_list.append({
-            "date" : td_list[0].text,
+            "format_date" : td_list[0].text,
+            "split_date" : re.split('[年月日]', td_list[0].text)[:3],
             "link" : td_list[1].find("a").get("href") if td_list[1].find("a") else None,
             "title": td_list[1].find("a").text if td_list[1].find("a") else None,
         })
@@ -33,6 +35,7 @@ def fetch_event_details(link):
             })
     event_details.update({
         "title" : value_celar(bsObj.find("title").getText()),
+        "purchase" : "https://p-ticket.jp/sunazalea"
     })
     return event_details
 
