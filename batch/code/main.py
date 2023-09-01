@@ -8,6 +8,7 @@ import datetime
 import json
 import re
 
+import hashlib
 
 
 def unique_list(a):
@@ -18,7 +19,9 @@ def unique_list(a):
     return b
 
 def unique_id(link):
-    return "".join(re.findall(r"\d+", link))
+    return hashlib.md5(link.encode()).hexdigest()
+    #return hashlib.sha256(text).hexdigest()
+    #return "".join(re.findall(r"\d+", link))
 
 def rotate_fetch_eventlist(next_week_amount):
     eventlist = []
@@ -66,6 +69,9 @@ def wakou_lib(amount):
     for event in event_list[:amount]:
         print(event["detail_link"])
         event.update(fetch_lib_event_details(event["detail_link"]))
+        event.update({
+            "id" : unique_id(event["detail_link"])
+        })
         all_events.update({
             event["id"] : event
         })
